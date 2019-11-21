@@ -8,7 +8,6 @@ function StockCards(props) {
       
       <div>
         <div className="card"
-            //  cardBG={props.cardBG}
             style={{backgroundColor: ((props.data.percentChange > 0) ? '#28a745' : '#dc3545')}}
             data={props.data}
             onClick={props.handleShowMessageClick}
