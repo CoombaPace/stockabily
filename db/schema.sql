@@ -22,7 +22,7 @@ CREATE TABLE `stocks` (
 
 USE `istock_db`;
 DROP table if exists istock_users
-CREATE TABLE IF NOT EXISTS iStock_users(
+CREATE TABLE IF NOT EXISTS istock_users(
     id              INT(5) AUTO_INCREMENT NOT NULL,
     first_name      VARCHAR(100) NOT NULL,
     last_name       VARCHAR(100) NOT NULL,
