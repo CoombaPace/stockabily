@@ -7,21 +7,25 @@ let updateTickers = [];
 
 class SearchBar extends Component {
 
-    state = {
+    constructor(props) {
+      super(props);
+      this.state = {
+        stockObj: {},
         ticker: "",
         search_ticker: "",
-        stocksInfo: {},
-        stocksInfo_keys: [],
-    };
+      };
+      console.log("props: ", props)
+    }
 // TRACKS WHAT GOES INTO THE SEARCH BAR
   handleInputChange = event => {
-    this.setState({ticker: event.target.value})
+    this.setState({ ticker: event.target.value })
     console.log("event.target.value: ", event.target.value)
   };
 
   resetName = event => {
     this.setState({ ticker: "" });
   }
+  
   
 // RUNS THE SUBMIT BUTTON, ONCLICK setState search_ticker = state.ticker
   handleFormSubmit = event => {
@@ -32,8 +36,6 @@ class SearchBar extends Component {
         this.searchTicker(this.state.search_ticker);
       })
     };
-
-    
 
 //   getUserId = event => {
 //     event.preventDefault();
@@ -50,16 +52,16 @@ class SearchBar extends Component {
     API.search(query)
     .then((res) => {
       stock_ticker[res.data.data[0].symbol] = res.data.data[0]
-      this.setState({ stocksInfo: stock_ticker }, () => {
-        console.log("stock-ticker: ", this.state.stocksInfo)
-        // stocksInfo_keys = Object.keys(this.state.stocksInfo)
-        this.setState({ stocksInfo_keys: Object.keys(this.state.stocksInfo) }, () => {
-          console.log("stocksInfo_keys: ", this.state.stocksInfo_keys)
-        });
-      });
+      // this.setState({ stocksInfo: stock_ticker }, () => {
+      //   console.log("stock-ticker: ", this.state.stocksInfo)
+      //   // stocksInfo_keys = Object.keys(this.state.stocksInfo)
+      //   this.setState({ stocksInfo_keys: Object.keys(this.state.stocksInfo) }, () => {
+      //     console.log("stocksInfo_keys: ", this.state.stocksInfo_keys)
+      //   });
+      // });
 
         var stock = {
-          ticker: query,
+          ticker: this.state.ticker,
           price: res.data.data[0].price,
           name: res.data.data[0].name,
           open: res.data.data[0].price_open,
@@ -70,33 +72,21 @@ class SearchBar extends Component {
           avgVol: res.data.data[0].volume_avg
         }
         console.log("stock: ", stock)
-        API.savestock(stock);
-        console.log("calling getstockdata")
+        API.savestock(stock)
+      }).then( (res) => {
+        console.log("res: ", res)
+        // this.props.setStockObj();
+        // this.props.setDbStocksState();
         this.props.getdbstockdata();
         this.resetName();
-
-
-        // API.getUseId().then((res) => {
-        //   console.log(" getUseId res.data: ", res.data)
-        //   // this.setState(res.data);
-        //   // console.log(" getUseId res: ", Object.keys(res))
-        //   test.user_id = res.data.userid
-
-        //   API.savestock(test).then((res) => {
-        //     console.log("test: ", test)
-        //     });
-
-        // })
       })
+      
       .catch(err => console.log(err));
   };
 
   updatedbstockdata = event => {
     event.preventDefault();
-    console.log("prevent default")
     API.getstocks().then((res) => {
-      console.log("res.data: ", res.data)
-      this.setState({ dbstocks: res.data })
       res.data.forEach(element => {
         console.log("element.ticker: ", element.ticker)
         updateTickers.push(element.ticker);
@@ -140,7 +130,7 @@ class SearchBar extends Component {
                         value={this.state.ticker}
                         type="text"
                         name="searchStock"
-                        placeholder="Enter Stock's Ticker"
+                        placeholder="Ticker"
                         onChange={this.handleInputChange}
                     />
                 </div>

@@ -107,7 +107,7 @@ module.exports = {
             console.log("err: ", err)
           }
           res.json(dbStocks);
-          // console.log("dbStocks: ", dbStocks)
+          console.log("dbStocks from getstocks: ", dbStocks)
         });
       }
   

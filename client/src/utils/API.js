@@ -11,6 +11,7 @@ export default {
   },
 
   savestock: function(stockData) {
+    console.log("savestock: ", stockData)
     return axios.post("/api/stocks", stockData);
   },
 
@@ -26,8 +27,7 @@ export default {
   deleteStocks: function(delTicker) {
     console.log("delTicker from Delete API: ", delTicker)
     return axios.post("/api/deleteStocks", delTicker).then( function(req, res) {
-        console.log("reqZ: ", req)
-        console.log("resZ: ", res)
+        console.log("deleteStocks req: ", req)
     })
   },
 

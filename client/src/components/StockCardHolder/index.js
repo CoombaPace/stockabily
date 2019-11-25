@@ -15,34 +15,53 @@ class StockCardHolder extends Component {
     state = {
       dbstocks: [],
       showModal: false,
-      // price: price,
-      // name: name,
-      // open: open,
-      // percentChange: percentChange,
-      // dayHigh: dayHigh,
-      // dayLow: dayLow,
-      // marketCap: marketCap,
-      // avgVol: avgVol
+      stockObj: {
+        key: ''
+      }
     };
 
   componentDidMount() {
     this.getdbstockdata();
   }
 
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log("stockObj: ", this.state.stockObj)
+  //   return this.state.stockObj !== nextState.stockObj;
+  // }
 
+  // componentDidUpdate(prevState) {
+  //   // Typical usage (don't forget to compare props):
+  //   if (this.state.dbstocks === prevState.dbstocks) {
+  //     this.getdbstockdata();
+  //   }
+  // }
     // MODAL CODE
     // Modal Show and Close functions:
     // handleShowMessageClick = (idx) => this.setState({ showModal: true, clickedIndex: idx });
     // handleCloseModal = () => this.setState({ showModal: false });
-  
+  // SET STATE FOR stockObj
+  setStockObj = (stock) => {
+    this.setState({ stockObj: stock})
+    console.log("stockObj: ", this.state.stockObj)
+  }
+
+  setDbStocksState = () => {
+    this.setState(state => {
+      const dbstocks = state.dbstocks.concat(state.stockObj);
+      return {
+        dbstocks,
+        stockObj: '',
+      };
+    });
+  }
 
   // GET DATA FROM THE DB
   getdbstockdata = event => {
     API.getstocks().then((res) => {
-      console.log("res.data: ", res.data)
-      this.setState({ dbstocks: res.data })
-      console.log("dbstocks:", this.state.dbstocks)
-      })
+      console.log("prev state: ", this.state.dbstocks)
+      this.setState({ dbstocks: res.data });
+      console.log("nextState: ", this.state.dbstocks)
+    })
   }
   //  handleShowMessageClick = (idx) => this.setState({ showModal: true, clickedIndex: idx })
 
@@ -54,7 +73,7 @@ class StockCardHolder extends Component {
       delTicker = {
         ticker: idx.data[delTicker].ticker
       };
-      console.log("this is del ticker from deleteDBstockData: ", delTicker)
+      console.log("delticker from deleteDBstockData: ", delTicker)
       API.deleteStocks(delTicker);
       this.getdbstockdata();
     });
@@ -96,13 +115,6 @@ class StockCardHolder extends Component {
   //     })
   //   })
   // }
-
-  
-
-  
-
-  
-
   
   render() {
     
@@ -112,6 +124,9 @@ class StockCardHolder extends Component {
         <SearchBar
           dbstocks={this.state.dbstocks}
           getdbstockdata={() => this.getdbstockdata()}
+          stockObj={this.state.stockObj}
+          setStockObj={() => this.setStockObj()}
+          setDbStocksState={() => this.setDbStocksState()}
           />
               <div className='row'>
                 <div className='col-12'>
@@ -120,14 +135,11 @@ class StockCardHolder extends Component {
                     {this.state.dbstocks.map((data, idx) => (
                       
                           <StockCards
-                            key={data.id}
-                            dbstocks={this.state.dbstocks}
+                            key={this.state.dbstocks.index}
                             data={data}
-                            getdbstocksdata={() => this.getdbstockdata()} 
                             handleShowMessageClick={() => this.handleShowMessageClick(idx)}
                             deleteDBstockData={() => this.deleteDBstockData(idx)}
-                            >
-                          </StockCards>
+                            />
                       
                     ))}
 
