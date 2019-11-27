@@ -4,13 +4,13 @@ import "./style.css";
 
 let stock_ticker = {};
 let updateTickers = [];
+let stock = {};
 
 class SearchBar extends Component {
 
     constructor(props) {
       super(props);
       this.state = {
-        stockObj: {},
         ticker: "",
         search_ticker: "",
       };
@@ -18,11 +18,11 @@ class SearchBar extends Component {
     }
 // TRACKS WHAT GOES INTO THE SEARCH BAR
   handleInputChange = event => {
-    this.setState({ ticker: event.target.value })
+    this.setState({ ticker: event.target.value.toUpperCase() }) // The API requires UPPERCASE letters.
     console.log("event.target.value: ", event.target.value)
   };
 
-  resetName = event => {
+  resetName = () => {
     this.setState({ ticker: "" });
   }
   
@@ -48,19 +48,11 @@ class SearchBar extends Component {
 //   }
 
 //   GETS DATA FROM API, SETS stockInfo_keys
-  searchTicker = query => {
+  searchTicker = (query) => {
     API.search(query)
     .then((res) => {
       stock_ticker[res.data.data[0].symbol] = res.data.data[0]
-      // this.setState({ stocksInfo: stock_ticker }, () => {
-      //   console.log("stock-ticker: ", this.state.stocksInfo)
-      //   // stocksInfo_keys = Object.keys(this.state.stocksInfo)
-      //   this.setState({ stocksInfo_keys: Object.keys(this.state.stocksInfo) }, () => {
-      //     console.log("stocksInfo_keys: ", this.state.stocksInfo_keys)
-      //   });
-      // });
-
-        var stock = {
+      stock = {
           ticker: this.state.ticker,
           price: res.data.data[0].price,
           name: res.data.data[0].name,
@@ -72,16 +64,10 @@ class SearchBar extends Component {
           avgVol: res.data.data[0].volume_avg
         }
         console.log("stock: ", stock)
-        API.savestock(stock)
-      }).then( (res) => {
-        console.log("res: ", res)
-        // this.props.setStockObj();
-        // this.props.setDbStocksState();
-        this.props.getdbstockdata();
+        API.savestock(stock);
+        this.props.setDbStocksState();
         this.resetName();
-      })
-      
-      .catch(err => console.log(err));
+      }).catch(err => console.log(err));
   };
 
   updatedbstockdata = event => {
@@ -114,6 +100,7 @@ class SearchBar extends Component {
             API.updateStocks(stock);
             this.props.getdbstockdata();
           })
+          .catch(err => console.log(err));
       })
     })
   }
