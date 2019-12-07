@@ -20,8 +20,8 @@ class StockCardHolder extends Component {
 
     // MODAL CODE
     // Modal Show and Close functions:
-    // handleShowMessageClick = (idx) => this.setState({ showModal: true, clickedIndex: idx });
-    // handleCloseModal = () => this.setState({ showModal: false });
+    handleShowMessageClick = (idx) => this.setState({ showModal: true, clickedIndex: idx });
+    handleCloseModal = () => this.setState({ showModal: false });
 
   // SETS dbstocks STATE AFTER HALF A SECOND
   setDbStocksState = () => {
@@ -29,7 +29,7 @@ class StockCardHolder extends Component {
     setTimeout(() => {
       console.log('calling');
       this.getdbstockdata();
-    }, 500); 
+    }, 300); 
   }
 
   // GET DATA FROM THE DB
@@ -40,8 +40,7 @@ class StockCardHolder extends Component {
       console.log("nextState: ", this.state.dbstocks)
     }).catch(err => console.log(err));
   }
-  //  handleShowMessageClick = (idx) => this.setState({ showModal: true, clickedIndex: idx })
-
+  
   // DELETE A STOCK FROM DB AND PAGE
   deleteDBstockData = idx => {
     let delTicker = idx;
@@ -81,7 +80,7 @@ class StockCardHolder extends Component {
                       
                     ))}
 
-                    {/* {this.state.showModal ? (
+                    {this.state.showModal ? (
                       <Modal onClose={this.handleCloseModal}>
                         <span>Ticker: {this.state.dbstocks[this.state.clickedIndex].ticker}  |  Name: {this.state.dbstocks[this.state.clickedIndex].name}</span>
                         <br />
@@ -93,7 +92,7 @@ class StockCardHolder extends Component {
                         <br />
                         <TradingViewWidget symbol={`${this.state.dbstocks[this.state.clickedIndex].ticker}`} height={500} width={600} />
                       </Modal>
-                    ) : null} */}
+                    ) : null}
                   </div>
                 </div>
               </div>
