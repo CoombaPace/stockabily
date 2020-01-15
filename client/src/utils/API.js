@@ -2,12 +2,12 @@ import axios from "axios";
 // import request from "request";
 
 // const ticker = "GDX"
-const BASEURL = "https://www.worldtradingdata.com/api/v1/stock?symbol=";
-const APIKEY = "&api_token=lIKhQVypBswwedWGj8P5cK6lkYekVwecEbUAO6lLGAYIZVoWcTRUZfSSC9Qa";
-
+const BASEURL = "https://financialmodelingprep.com/api/v3/financials/income-statement/";
+// const APIKEY = "&api_token=lIKhQVypBswwedWGj8P5cK6lkYekVwecEbUAO6lLGAYIZVoWcTRUZfSSC9Qa";
+//
 export default {
   search: function(ticker) {
-    return axios.get(BASEURL + ticker + APIKEY);
+    return axios.get(BASEURL + ticker + "?period=year");
   },
 
   savestock: function(stockData) {

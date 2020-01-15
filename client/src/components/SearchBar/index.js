@@ -51,19 +51,21 @@ class SearchBar extends Component {
   searchTicker = (query) => {
     API.search(query)
     .then((res) => {
-      stock_ticker[res.data.data[0].symbol] = res.data.data[0]
+        console.log("res.data: ", res.data)
+        console.log("res.data: ", res.data.financials)
+        console.log("stock: ", res)
+        stock_ticker = res.data.symbol
       stock = {
           ticker: this.state.ticker,
-          price: res.data.data[0].price,
-          name: res.data.data[0].name,
-          open: res.data.data[0].price_open,
-          percentChange: res.data.data[0].change_pct,
-          dayHigh: res.data.data[0].day_high,
-          dayLow: res.data.data[0].day_low,
-          marketCap: res.data.data[0].market_cap,
-          avgVol: res.data.data[0].volume_avg
+          price: res.data.financials[0]["Revenue Growth"],
+          // name: res.data.data[0].name,
+          // open: res.data.data[0].price_open,
+          // percentChange: res.data.financials[0]["Revenue Growth"],
+          // dayHigh: res.data.data[0].day_high,
+          // dayLow: res.data.data[0].day_low,
+          // marketCap: res.data.data[0].market_cap,
+          // avgVol: res.data.data[0].volume_avg
         }
-        console.log("stock: ", stock)
         API.savestock(stock);
         this.props.setDbStocksState();
         this.resetName();

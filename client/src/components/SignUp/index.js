@@ -1,43 +1,16 @@
 import React from 'react';
 import API from "../../utils/API";
-// import routes from  "../../utils/API" 
+import routes from  "../../utils/API"; 
 
-
-//     }
-
-//     document.body.appendChild(form);
-//     form.submit();
-//   }
-let signupformfirstname = ""
-let signupformlastname = ""
-let signupformusername = ""
-let signupformpassword = ""
 
 class SignUp extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            signupformfirstname,
-            signupformlastname,
-            signupformusername,
-            signupformpassword
-        }
+        state = {
+            signupformfirstname: "",
+            signupformlastname: "",
+            signupformusername: "",
+            signupformpassword: ""
     }
 
-    // handleSubmit(event) {
-    //   event.preventDefault();
-    //   const form = event.target;
-    //   const data = new FormData(form);
-
-    //   for (let name of data.keys()) {
-    //     const input = form.elements[name];
-    //   }
-
-    //   fetch({routes}, {
-    //     method: 'POST',
-    //     body: data,
-    //   });
-    // }
     handleFormInputChange = event => {
         console.log("event.target.value: ", event.target.value)
         console.log("event.target.name: ", event.target.name)
@@ -49,23 +22,60 @@ class SignUp extends React.Component {
         });
     }
 
+    // signUpFormSubmit = event => {
+    //     event.preventDefault()
+    //     console.log("signUpFormSubmit: ")
+    //     let formdata = {
+    //         firstname: this.state.signupformfirstname,
+    //         lastname: this.state.signupformlastname,
+    //         username: this.state.signupformusername,
+    //         password: this.state.signupformpassword
+    //     }
+    //     API.sendSignUpForm(formdata).then(res => {
+    //         this.props.history.push(`/`)
+    //       })
+
+    // };
+
     signUpFormSubmit = event => {
         event.preventDefault()
         console.log("signUpFormSubmit: ")
         let formdata = {
-            firstname: this.state.signupformfirstname,
-            lastname: this.state.signupformlastname,
-            username: this.state.signupformusername,
-            password: this.state.signupformpassword
+          firstname: this.state.signupformfirstname,
+          lastname: this.state.signupformlastname,
+          username: this.state.signupformusername,
+          password: this.state.signupformpassword
         }
-        API.sendSignUpForm(formdata).then(res => {
-            this.props.history.push(`/`)
-          })
+    
+        API.sendSignUpForm(formdata)
+      };
 
-    };
+    handleFormInputChange = event => {
+        console.log("event.target.value: ", event.target.value);
+        console.log("event.target.name: ", event.target.name);
+
+        this.setState({ [event.target.name]: event.target.value }, () => {
+          console.log("this.state.signupformfirstname: ", this.state.signupformfirstname)
+          console.log("this.state.signupformlastname: ", this.state.signupformlastname)
+          console.log("this.state.signupformusername: ", this.state.signupformusername)
+          console.log("this.state.signupformpassword: ", this.state.signupformpassword)
+        });
+      }
+    
+      clicksignup = () => {
+    
+        if (!this.state.displaysignup) {
+          this.setState({ displaysignup: true }, () => {
+            console.log("this.state.displaysignup: ", this.state.displaysignup)
+          })
+        } else {
+          this.setState({ displaysignup: false }, () => {
+            console.log("this.state.displaysignup: ", this.state.displaysignup)
+          })
+        }
+      }
 
     render() {
-        // const SignUp = props => {
         return (
             <div>
                 <div className="form container">
@@ -95,16 +105,12 @@ class SignUp extends React.Component {
                                 </div>
                                 <div className="form-group d-flex justify-content-center btn-container">
                                     <a href="./SignIn" className="btn btn-primary">
-                                        Go to sign in
+                                        Sign in
                                     </a>
                                    
                                         <button onClick={this.signUpFormSubmit} className="btn btn-success" id="btn_submit_signup">
                                             Submit
                                         </button>
-                                    
-                                    {/* <a href="/" className="btn btn-success" onClick={this.signUpFormSubmit}>
-                                    Submit Link
-                                    </a> */}
                                 </div>
                             </form>
                         </div>

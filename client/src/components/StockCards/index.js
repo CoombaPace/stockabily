@@ -20,11 +20,11 @@ function StockCards(props) {
               ) : null}
                 {props.data.ticker}
                 <br/>
-                Price: {props.data.price}
+                Year: {props.data.price}
                 <br/>
-                % Change: {props.data.percentChange} 
+                {/* % Change: {props.data.percentChange}  */}
                 <br/>
-                Day High: {props.data.dayHigh}
+                {/* Day High: {props.data.dayHigh} */}
                 <br/>
         </div>
         <button id={"delBtn"} type="button" className="btn btn-warning" onClick={props.deleteDBstockData}>Remove</button>

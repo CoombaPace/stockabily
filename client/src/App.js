@@ -1,12 +1,13 @@
+/* TODO
+  Router: Wrap index.js in browser router, add Router & Switch to App.js.
+  Remove SignIn/Out components => use get user id button instead.
+  Route to sign up, sign in displays form in dropdown menu or modal and then displays logout button. 
+*/
+
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import Wrapper from "./components/Wrapper";
 import Nav from "./components/Nav";
-import SearchBar from "./components/SearchBar";
 import StockCardHolder from "./components/StockCardHolder";
-import SignUp from "./components/SignUp";
-import SignIn from "./components/SignIn";
-import Modal from "./components/Modal/Modal"
 import Jumbotron from "./components/Jumbotron";
 
 class App extends Component {
@@ -16,7 +17,6 @@ class App extends Component {
     return (
 
       <Wrapper >
-        <Router>
           <div>
             <div>
               {/* <Nav
@@ -27,24 +27,10 @@ class App extends Component {
                 // logOut= 
                 userLogin={this.logOut}
               /> */}
-
-
-              {/* <Route
-                path="/signedIn"
-              />
-
-              <Route
-                path="/signup"
-                // exact  component={SignUp} 
-                // https://tylermcginnis.com/react-router-pass-props-to-components/
-                render={(props) => <SignUp {...props}
-                  logOut={this.logOut} />}
-              />
-
-              <Route exact path="/signin" component={SignIn} /> */}
+              
 
               <Jumbotron />
-
+              <Nav/>
               {/* <SearchBar
                 handleInputChange={this.handleInputChange}
                 handleFormSubmit={this.handleFormSubmit}
@@ -59,7 +45,6 @@ class App extends Component {
 
             {/* <MiniChart></MiniChart> */}
           </div>
-        </Router>
 
       </Wrapper>
     );
