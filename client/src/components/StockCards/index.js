@@ -20,7 +20,7 @@ function StockCards(props) {
               ) : null}
                 {props.data.ticker}
                 <br/>
-                : {props.data.price}
+                Price: {props.data.price}
                 <br/>
                 % Change: {props.data.percentChange} 
                 <br/>

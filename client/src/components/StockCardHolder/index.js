@@ -72,7 +72,7 @@ class StockCardHolder extends Component {
                     {this.state.dbstocks.map((data, idx) => (
                       
                           <StockCards
-                            key={this.state.dbstocks.index}
+                            key={data.id}
                             data={data}
                             handleShowMessageClick={() => this.handleShowMessageClick(idx)}
                             deleteDBstockData={() => this.deleteDBstockData(idx)}
